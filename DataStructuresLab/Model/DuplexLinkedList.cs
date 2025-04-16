@@ -5,18 +5,15 @@ namespace DataStructuresLab.Model
 {
     public class DuplexLinkedList<T> : IEnumerable<T>
     {
-        public Item<T>? Head { get; set; }
-        public Item<T>? Tail { get; set; }
-        public int Count { get; set; }
+        public Item<T>? Head { get; private set; }
+        public Item<T>? Tail { get; private set; }
+        public int Count { get; private set; }
 
         public DuplexLinkedList() { }
 
         public DuplexLinkedList(T data)
         {
-            var item = new Item<T>(data);
-            Head = item;
-            Tail = item;
-            Count = 1;
+            Add(data);
         }
 
         public void Add(T data)
@@ -27,23 +24,45 @@ namespace DataStructuresLab.Model
             {
                 Head = item;
                 Tail = item;
-                Count = 1;
-                return;
             }
-
-            Tail.Next = item;
-            item.Previous = Tail;
-            Tail = item;
+            else
+            {
+                Tail.Next = item;
+                item.Previous = Tail;
+                Tail = item;
+            }
             Count++;
         }
 
-        public bool Delete(T data)
+        public void Clear()
+        {
+            Head = null;
+            Tail = null;
+            Count = 0;
+        }
+
+        public bool Contains(T item)
+        {
+            var current = Head;
+            while (current != null)
+            {
+                if ((item == null && current.Data == null) ||
+                    (item != null && item.Equals(current.Data)))
+                {
+                    return true;
+                }
+                current = current.Next;
+            }
+            return false;
+        }
+
+        public bool Remove(T data)
         {
             var current = Head;
 
             while (current != null)
             {
-                if (current.Data != null && current.Data.Equals(data))
+                if (object.Equals(current.Data, data))
                 {
                     if (current.Previous != null)
                         current.Previous.Next = current.Next;
@@ -61,7 +80,6 @@ namespace DataStructuresLab.Model
 
                 current = current.Next;
             }
-
             return false;
         }
 
@@ -97,12 +115,28 @@ namespace DataStructuresLab.Model
             }
         }
 
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+            if (arrayIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+            if (array.Length - arrayIndex < Count)
+                throw new Exception("Недостаточно места в массиве.");
+            var current = Head;
+            while (current != null)
+            {
+                array[arrayIndex++] = current.Data;
+                current = current.Next;
+            }
+        }
+
         public IEnumerator GetEnumerator()
         {
             var current = Head;
             while (current != null)
             {
-                yield return current;
+                yield return current.Data;
                 current = current.Next;
             }
         }
