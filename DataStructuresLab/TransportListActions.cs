@@ -13,11 +13,18 @@ namespace DataStructuresLab
         private DuplexLinkedList<Transport> transportList;
         private Random rnd = new Random();
 
+        /// <summary>
+        /// Список действий при взаимодействии со списком
+        /// </summary>
+        /// <param name="list">Список транспортов</param>
         public TransportsListActions(DuplexLinkedList<Transport> list)
         {
             transportList = list;
         }
 
+        /// <summary>
+        /// Метод, создающий список и заполняющий его
+        /// </summary>
         public void CreateAndFillList()
         {
             transportList.Clear();
@@ -69,15 +76,20 @@ namespace DataStructuresLab
             }
 
             Console.WriteLine($"Список создан.");
+
             Console.ReadKey();
             Console.Clear();
         }
 
+        /// <summary>
+        /// Метод, позволяющий вывести весь список
+        /// </summary>
         public void PrintList()
         {
             if (transportList.IsEmpty)
             {
                 Console.WriteLine("Список пуст.");
+
                 Console.ReadKey();
                 Console.Clear();
                 return;
@@ -89,11 +101,15 @@ namespace DataStructuresLab
             Console.Clear();
         }
 
+        /// <summary>
+        /// Метод удаления от заданного элемента включительно до конца списка
+        /// </summary>
         public void DeleteFromToEnd()
         {
             if (transportList.IsEmpty)
             {
                 Console.WriteLine("Список пуст. Нечего удалять.");
+
                 Console.ReadKey();
                 Console.Clear();
                 return;
@@ -124,10 +140,14 @@ namespace DataStructuresLab
             int removedCount = transportList.RemoveFromToEnd(itemToFind);
             Console.WriteLine($"Удалено {removedCount} элементов после элемента с ID {id}.");
             PrintList();
+
             Console.ReadKey();
             Console.Clear();
         }
 
+        /// <summary>
+        /// Метод добавления случайных транспортов на нечётные индексы
+        /// </summary>
         public void AddAtOddPositions()
         {
             try
@@ -168,10 +188,15 @@ namespace DataStructuresLab
                     }
 
                     return transport;
-                }, count);
+                }, 
+                count);
 
-                Console.WriteLine($"Добавлено {count} элементов на нечётные позиции.");
+                Console.WriteLine($"Список до добавления: ");
                 PrintList();
+
+                Console.WriteLine($"Добавлен элементы на нечётные позиции.");
+                PrintList();
+
                 Console.ReadKey();
                 Console.Clear();
             }
@@ -181,19 +206,26 @@ namespace DataStructuresLab
                 Console.WriteLine($"Ошибка: {ex.Message}");
             }
         }
-
+        
+        /// <summary>
+        /// Метод для клонирования списка
+        /// </summary>
         public void CloneList()
         {
             if (transportList.IsEmpty)
             {
                 Console.WriteLine("Список пуст. Клонирование невозможно.");
-
+                Console.ReadKey();
+                Console.Clear();
                 return;
             }
 
-            DuplexLinkedList<Transport> clonedList = new DuplexLinkedList<Transport>();
+            Transport[] transportArray = new Transport[transportList.Count];
 
-            foreach (Transport transport in transportList)
+            transportList.CopyTo(transportArray, 0);
+
+            DuplexLinkedList<Transport> clonedList = new DuplexLinkedList<Transport>();
+            foreach (var transport in transportArray)
             {
                 clonedList.Add((Transport)transport.Clone());
             }
@@ -207,15 +239,20 @@ namespace DataStructuresLab
             clonedList.PrintLinkedList();
 
             Console.WriteLine("Список успешно клонирован.");
+
             Console.ReadKey();
             Console.Clear();
         }
 
+        /// <summary>
+        /// Метод, очищающий список
+        /// </summary>
         public void ClearList()
         {
             transportList.Clear();
             Console.WriteLine("Список очищен.");
-                        Console.ReadKey();
+
+            Console.ReadKey();
             Console.Clear();
         }
     }

@@ -5,17 +5,37 @@ namespace DataStructuresLab.Model
 {
     public class DuplexLinkedList<T> : IEnumerable<T>
     {
+        /// <summary>
+        /// Начало списка, не равный null
+        /// </summary>
         public Item<T>? Head { get; private set; }
+        /// <summary>
+        /// Конец списка, не равный null
+        /// </summary>
         public Item<T>? Tail { get; private set; }
+        /// <summary>
+        /// Количество элементов в списке
+        /// </summary>
         public int Count { get; private set; }
 
+        /// <summary>
+        /// Конуструктор без параметров
+        /// </summary>
         public DuplexLinkedList() { }
 
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="data">Параметр - данные элемента списка</param>
         public DuplexLinkedList(T data)
         {
             Add(data);
         }
 
+        /// <summary>
+        /// Добавляет элемент в конец списка
+        /// </summary>
+        /// <param name="data">Данные добавляемого элемента списка</param>
         public void Add(T data)
         {
             var item = new Item<T>(data);
@@ -34,6 +54,10 @@ namespace DataStructuresLab.Model
             Count++;
         }
 
+        /// <summary>
+        /// Добавляет коллекцию элементов в конец списка
+        /// </summary>
+        /// <param name="items">Добавляемые элементы</param>
         public void AddRange(IEnumerable<T> items)
         {
             foreach (var item in items)
@@ -42,6 +66,9 @@ namespace DataStructuresLab.Model
             }
         }
 
+        /// <summary>
+        /// Удаляет все элементы из списка
+        /// </summary>
         public void Clear()
         {
             Head = null;
@@ -49,8 +76,16 @@ namespace DataStructuresLab.Model
             Count = 0;
         }
 
+        /// <summary>
+        /// Метод, проверяющий является ли список пустым
+        /// </summary>
         public bool IsEmpty => Count == 0;
 
+        /// <summary>
+        /// Проверяет, содержит ли список указанный элемент
+        /// </summary>
+        /// <param name="item">Искомый элемент</param>
+        /// <returns>Возвращает булевое значение true/false в зависимости от того, найден ли элемент</returns>
         public bool Contains(T item)
         {
             var current = Head;
@@ -68,6 +103,11 @@ namespace DataStructuresLab.Model
             return false;
         }
 
+        /// <summary>
+        /// Удаляет первое вхождение указанного элемента из списка 
+        /// </summary>
+        /// <param name="data">Элемент для удаления</param>
+        /// <returns>Возвращает булевое значение true/false в зависимости от того, найден ли элемент и удалён</returns>
         public bool Remove(T data)
         {
             var current = Head;
@@ -95,6 +135,9 @@ namespace DataStructuresLab.Model
             return false;
         }
 
+        /// <summary>
+        /// Метод, реверсирующий список
+        /// </summary>
         public void Reverse()
         {
             var current = Head;
@@ -110,6 +153,9 @@ namespace DataStructuresLab.Model
             }
         }
 
+        /// <summary>
+        /// Метод, который выводит все элементы списка
+        /// </summary>
         public void PrintLinkedList()
         {
             if (IsEmpty)
@@ -124,6 +170,11 @@ namespace DataStructuresLab.Model
             }
         }
 
+        /// <summary>
+        /// Выполняет копирование списка в массив с указанного индекса
+        /// </summary>
+        /// <param name="array">Массив</param>
+        /// <param name="arrayIndex">Индекс элемента массива</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
@@ -140,6 +191,11 @@ namespace DataStructuresLab.Model
             }
         }
 
+        /// <summary>
+        /// Удаляет все элементы, начиная с указанного до конца списка
+        /// </summary>
+        /// <param name="foundedItem">Элемент, от которого происходит удаление элементов</param>
+        /// <returns>Возвращает количество удалённых элементов</returns>
         public int RemoveFromToEnd(T foundedItem)
         {
             int removedCount = 0;
@@ -174,6 +230,11 @@ namespace DataStructuresLab.Model
             return removedCount;
         }
 
+        /// <summary>
+        /// Добавляет случайно сгенерированные элементы на нечётные позиции списка
+        /// </summary>
+        /// <param name="generator">Генератор новых элементов</param>
+        /// <param name="count">Количество элементов, которые нужно вставить на нечётные индексы списка</param>
         public void AddAtOddPositions(Func<T> generator, int count)
         {
             if (generator == null)
