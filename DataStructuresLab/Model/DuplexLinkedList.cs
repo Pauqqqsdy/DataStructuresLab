@@ -34,6 +34,14 @@ namespace DataStructuresLab.Model
             Count++;
         }
 
+        public void AddRange(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                Add(item);
+            }
+        }
+
         public void Clear()
         {
             Head = null;
@@ -41,9 +49,12 @@ namespace DataStructuresLab.Model
             Count = 0;
         }
 
+        public bool IsEmpty => Count == 0;
+
         public bool Contains(T item)
         {
             var current = Head;
+
             while (current != null)
             {
                 if ((item == null && current.Data == null) ||
@@ -51,6 +62,7 @@ namespace DataStructuresLab.Model
                 {
                     return true;
                 }
+
                 current = current.Next;
             }
             return false;
@@ -83,35 +95,32 @@ namespace DataStructuresLab.Model
             return false;
         }
 
-        public DuplexLinkedList<T> Reverse()
+        public void Reverse()
         {
-            var result = new DuplexLinkedList<T>();
+            var current = Head;
+            Head = Tail;
+            Tail = current;
 
-            var current = Tail;
-
-            while(current != null)
+            while (current != null)
             {
-                result.Add(current.Data);
-                current = current.Previous;
+                var next = current.Next;
+                current.Next = current.Previous;
+                current.Previous = next;
+                current = next;
             }
-            return result;
         }
 
-        public void PrintAll()
+        public void PrintLinkedList()
         {
-            if (Count == 0)
+            if (IsEmpty)
             {
                 Console.WriteLine("Список пуст.");
                 return;
             }
 
-            int index = 1;
-            Item<T>? current = Head;
-            while (current != null)
+            foreach (var item in this)
             {
-                Console.WriteLine($"{index}. {current.Data}");
-                current = current.Next;
-                index++;
+                Console.WriteLine(item);
             }
         }
 
@@ -122,12 +131,91 @@ namespace DataStructuresLab.Model
             if (arrayIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             if (array.Length - arrayIndex < Count)
-                throw new Exception("Недостаточно места в массиве.");
+                throw new Exception("Недостаточно места.");
             var current = Head;
             while (current != null)
             {
                 array[arrayIndex++] = current.Data;
                 current = current.Next;
+            }
+        }
+
+        public int RemoveFromToEnd(T foundedItem)
+        {
+            int removedCount = 0;
+            Item<T>? current = Head;
+
+            while (current != null && !object.Equals(current.Data, foundedItem))
+            {
+                current = current.Next;
+            }
+
+            if (current != null)
+            {
+                Tail = current.Previous;
+
+                if (current == Head)
+                {
+                    Head = null;
+                }
+                else
+                {
+                    current.Previous.Next = null;
+                }
+
+                while (current != null)
+                {
+                    removedCount++;
+                    Count--;
+                    current = current.Next;
+                }
+            }
+
+            return removedCount;
+        }
+
+        public void AddAtOddPositions(Func<T> generator, int count)
+        {
+            if (generator == null)
+                throw new ArgumentNullException(nameof(generator));
+
+            var itemsToAdd = new List<T>();
+            for (int i = 0; i < count; i++)
+            {
+                itemsToAdd.Add(generator());
+            }
+
+            int targetPosition = 1;
+            int currentPosition = 0;
+            Item<T> current = Head;
+            Item<T> previous = null;
+
+            foreach (var item in itemsToAdd)
+            {
+                while (current != null && currentPosition < targetPosition)
+                {
+                    previous = current;
+                    current = current.Next;
+                    currentPosition++;
+                }
+
+                var newNode = new Item<T>(item);
+                newNode.Previous = previous;
+                newNode.Next = current;
+
+                if (previous != null)
+                    previous.Next = newNode;
+                else
+                    Head = newNode;
+
+                if (current != null)
+                    current.Previous = newNode;
+                else
+                    Tail = newNode;
+
+                Count++;
+
+                targetPosition += 2;
             }
         }
 
