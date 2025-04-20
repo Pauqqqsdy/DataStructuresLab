@@ -14,7 +14,7 @@ namespace DataStructuresLab
         private Random rnd = new Random();
 
         /// <summary>
-        /// Список действий при взаимодействии со списком
+        /// Список транспортов при взаимодействии с меню
         /// </summary>
         /// <param name="list">Список транспортов</param>
         public TransportsListActions(DuplexLinkedList<Transport> list)
@@ -24,6 +24,7 @@ namespace DataStructuresLab
 
         /// <summary>
         /// Метод, создающий список и заполняющий его
+        /// При этом предварительно очищает предыдущий список
         /// </summary>
         public void CreateAndFillList()
         {

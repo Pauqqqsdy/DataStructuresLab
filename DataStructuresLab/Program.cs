@@ -66,6 +66,7 @@ namespace DataStructuresLab
                             break;
                     }
                 }
+
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Ошибка: {ex.Message}");
