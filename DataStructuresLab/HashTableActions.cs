@@ -195,7 +195,7 @@ namespace DataStructuresLab
                 transportsHashTable.Add(transport.ID.Id, transport);
             }
 
-            Console.WriteLine($"Добавлено {count} случайных транспортов.");
+            Console.WriteLine($"Добавлено {count} транспортов.");
             Console.ReadKey();
             Console.Clear();
         }
@@ -223,7 +223,7 @@ namespace DataStructuresLab
                 copiedTable.Add(entry.Key, entry.Value);
             }
 
-            Console.WriteLine("\nОригинальная хеш-таблица:");
+            Console.WriteLine("\nНачальная хеш-таблица:");
             transportsHashTable.PrintHS();
 
             Console.WriteLine("\nСкопированная хеш-таблица:");
