@@ -178,11 +178,14 @@ namespace DataStructuresLab.Model
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(nameof(array), "Массив не может быть null.");
+
             if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Индекс не может быть отрицательным.");
+
             if (array.Length - arrayIndex < Count)
-                throw new Exception("Недостаточно места.");
+                throw new ArgumentException("Недостаточно места.", nameof(array));
+
             var current = Head;
             while (current != null)
             {
