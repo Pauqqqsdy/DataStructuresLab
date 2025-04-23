@@ -2,19 +2,19 @@
 
 namespace DataStructuresLab.ModelHashSet
 {
-    class Item<T>
+    public class ItemTable<T>
     {
         public T? Data { get; set; }
 
-        public Item<T>? Next { get; set; }
+        public ItemTable<T>? Next { get; set; }
 
-        public Item()
+        public ItemTable()
         {
             Data = default(T);
             Next = null;
         }
 
-        public Item(T? data)
+        public ItemTable(T? data)
         {
             Data = data;
             Next = null;

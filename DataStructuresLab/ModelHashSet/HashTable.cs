@@ -10,8 +10,9 @@ namespace DataStructuresLab.ModelHashSet
         private int defaultSize = 10;
         private double loadFactor = 0.75;
         private int limitFactor;
-        private Item<Entry<TKey, TValue>>[] set;
+        private ItemTable<Entry<TKey, TValue>>[] set;
         private int count = 0;
+        internal int GetArrayLength() => set.Length;
 
         public int Count => count;
 
@@ -19,7 +20,7 @@ namespace DataStructuresLab.ModelHashSet
 
         public HashTable()
         {
-            set = new Item<Entry<TKey, TValue>>[defaultSize];
+            set = new ItemTable<Entry<TKey, TValue>>[defaultSize];
             limitFactor = (int)(defaultSize * loadFactor);
         }
 
@@ -38,12 +39,12 @@ namespace DataStructuresLab.ModelHashSet
 
             if (set[index] == null)
             {
-                set[index] = new Item<Entry<TKey, TValue>>(newEntry);
+                set[index] = new ItemTable<Entry<TKey, TValue>>(newEntry);
                 count++;
             }
             else
             {
-                Item<Entry<TKey, TValue>> current = set[index];
+                ItemTable<Entry<TKey, TValue>> current = set[index];
                 while (current.Next != null)
                 {
                     if (current.Data.Key.Equals(key))
@@ -52,7 +53,7 @@ namespace DataStructuresLab.ModelHashSet
                 }
                 if (!current.Data.Key.Equals(key))
                 {
-                    current.Next = new Item<Entry<TKey, TValue>>(newEntry);
+                    current.Next = new ItemTable<Entry<TKey, TValue>>(newEntry);
                     count++;
                 }
              }
@@ -61,23 +62,23 @@ namespace DataStructuresLab.ModelHashSet
         private void Resize()
         {
             int newSize = set.Length * 2;
-            var newTable = new Item<Entry<TKey, TValue>>[newSize];
+            var newTable = new ItemTable<Entry<TKey, TValue>>[newSize];
 
             foreach (var entry in this)
             {
                 int newIndex = Math.Abs(entry.Key.GetHashCode() % newSize);
                 if (newTable[newIndex] == null)
                 {
-                    newTable[newIndex] = new Item<Entry<TKey, TValue>>(entry);
+                    newTable[newIndex] = new ItemTable<Entry<TKey, TValue>>(entry);
                 }
                 else
                 {
-                    Item<Entry<TKey, TValue>> current = newTable[newIndex];
+                    ItemTable<Entry<TKey, TValue>> current = newTable[newIndex];
                     while (current.Next != null)
                     {
                         current = current.Next;
                     }
-                    current.Next = new Item<Entry<TKey, TValue>>(entry);
+                    current.Next = new ItemTable<Entry<TKey, TValue>>(entry);
                 }
             }
 
@@ -87,7 +88,7 @@ namespace DataStructuresLab.ModelHashSet
 
         public void Clear()
         {
-            set = new Item<Entry<TKey, TValue>>[defaultSize];
+            set = new ItemTable<Entry<TKey, TValue>>[defaultSize];
             count = 0;
         }
 
@@ -97,7 +98,7 @@ namespace DataStructuresLab.ModelHashSet
                 throw new ArgumentNullException(nameof(key), "Ключ не может быть пустым.");
 
             int index = Math.Abs(key.GetHashCode() % set.Length);
-            Item<Entry<TKey, TValue>> current = set[index];
+            ItemTable<Entry<TKey, TValue>> current = set[index];
 
             while (current != null)
             {
@@ -124,7 +125,7 @@ namespace DataStructuresLab.ModelHashSet
 
             for (int i = 0; i < set.Length; i++)
             {
-                Item<Entry<TKey, TValue>> current = set[i];
+                ItemTable<Entry<TKey, TValue>> current = set[i];
 
                 while (current != null)
                 {
@@ -140,7 +141,7 @@ namespace DataStructuresLab.ModelHashSet
                 throw new ArgumentNullException(nameof(key), "Ключ не может быть пустым.");
 
             int index = Math.Abs(key.GetHashCode() % set.Length);
-            Item<Entry<TKey, TValue>> current = set[index];
+            ItemTable<Entry<TKey, TValue>> current = set[index];
 
             if (current != null && current.Data.Key.Equals(key))
             {
@@ -169,7 +170,7 @@ namespace DataStructuresLab.ModelHashSet
                 throw new ArgumentNullException(nameof(key), "Ключ не может быть пустым.");
 
             int index = Math.Abs(key.GetHashCode() % set.Length);
-            Item<Entry<TKey, TValue>> current = set[index];
+            ItemTable<Entry<TKey, TValue>> current = set[index];
 
             while (current != null)
             {
@@ -186,26 +187,37 @@ namespace DataStructuresLab.ModelHashSet
             if (set == null)
                 throw new Exception("Таблица не создана.");
 
+            Console.WriteLine("Содержимое хеш-таблицы:");
+            int totalElements = 0;
+
             for (int i = 0; i < set.Length; i++)
             {
-                Console.WriteLine($"{i} :");
                 if (set[i] != null)
                 {
-                    Item<Entry<TKey, TValue>> current = set[i];
+                    Console.WriteLine($"[{i}]: ");
+
+                    ItemTable<Entry<TKey, TValue>> current = set[i];
+                    int chainLength = 0;
+
                     while (current != null)
                     {
-                        Console.WriteLine(current.Data);
+                        Console.WriteLine($"Ключ: {current.Data.Key}, Значение: {current.Data.Value}");
                         current = current.Next;
+                        chainLength++;
+                        totalElements++;
                     }
                 }
             }
+
+            Console.WriteLine($"Всего элементов: {totalElements}");
+            Console.WriteLine($"Коэффициент заполнения: {(double)count / set.Length:P}");
         }
 
         public IEnumerator<Entry<TKey, TValue>> GetEnumerator()
         {
             for (int i = 0; i < set.Length; i++)
             {
-                Item<Entry<TKey, TValue>> current = set[i];
+                ItemTable<Entry<TKey, TValue>> current = set[i];
                 while (current != null)
                 {
                     yield return current.Data;
