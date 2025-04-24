@@ -223,10 +223,10 @@ namespace DataStructuresLab
                 copiedTable.Add(entry.Key, entry.Value);
             }
 
-            Console.WriteLine("\nНачальная хеш-таблица:");
+            Console.WriteLine("\nНачальная хеш-таблица");
             transportsHashTable.PrintHS();
 
-            Console.WriteLine("\nСкопированная хеш-таблица:");
+            Console.WriteLine("\nСкопированная хеш-таблица");
             copiedTable.PrintHS();
 
             Console.ReadKey();
