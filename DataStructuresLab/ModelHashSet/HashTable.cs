@@ -7,23 +7,58 @@ namespace DataStructuresLab.ModelHashSet
 {
     public class HashTable<TKey, TValue> : IEnumerable<Entry<TKey, TValue>>
     {
+        /// <summary>
+        /// Начальный размер таблицы = 10
+        /// </summary>
         private int defaultSize = 10;
+
+        /// <summary>
+        /// Коэффициент заполнения для расширения
+        /// </summary>
         private double loadFactor = 0.75;
+
+        /// <summary>
+        /// Предельное количество элементов перед расширением хеш-таблицы
+        /// </summary>
         private int limitFactor;
+
+        /// <summary>
+        /// Массив цепочек
+        /// </summary>
         private ItemTable<Entry<TKey, TValue>>[] set;
+
+        /// <summary>
+        /// Текущее кол-во элементов в таблице
+        /// </summary>
         private int count = 0;
+
+        /// <summary>
+        /// Метод, возвращающий длину цепочки
+        /// </summary>
+        /// <returns></returns>
         internal int GetArrayLength() => set.Length;
 
+        /// <summary>
+        /// Метод, возвращающий кол-во элементов
+        /// </summary>
         public int Count => count;
 
         public bool isReadOnly => false;
 
+        /// <summary>
+        /// Таблица с начальным размером
+        /// </summary>
         public HashTable()
         {
             set = new ItemTable<Entry<TKey, TValue>>[defaultSize];
             limitFactor = (int)(defaultSize * loadFactor);
         }
 
+        /// <summary>
+        /// Метод, добавляющий новый элемент по ключу
+        /// </summary>
+        /// <param name="key">Ключ</param>
+        /// <param name="value">Значение</param>
         public void Add(TKey key, TValue value)
         {
             if (key == null)
@@ -59,6 +94,9 @@ namespace DataStructuresLab.ModelHashSet
              }
         }
 
+        /// <summary>
+        /// Увеличивает таблицу в 2 раза
+        /// </summary>
         private void Resize()
         {
             int newSize = set.Length * 2;
@@ -86,12 +124,20 @@ namespace DataStructuresLab.ModelHashSet
             limitFactor = (int)(newSize * loadFactor);
         }
 
+        /// <summary>
+        /// Очищает таблицу до начального состояния
+        /// </summary>
         public void Clear()
         {
             set = new ItemTable<Entry<TKey, TValue>>[defaultSize];
             count = 0;
         }
 
+        /// <summary>
+        /// Проверяет наличие элемента по ключу
+        /// </summary>
+        /// <param name="key">Ключ</param>
+        /// <returns>Возвращает false, если элемента нет в таблице и true, если он есть</returns>
         public bool Contains(TKey key)
         {
             if (key == null)
@@ -110,6 +156,11 @@ namespace DataStructuresLab.ModelHashSet
             return false;
         }
 
+        /// <summary>
+        /// Копирует элементы в массив
+        /// </summary>
+        /// <param name="array">Массив</param>
+        /// <param name="arrayIndex">Индекс</param>
         public void CopyTo(Entry<TKey, TValue>[] array, int arrayIndex)
         {
             if (array == null)
@@ -135,6 +186,11 @@ namespace DataStructuresLab.ModelHashSet
             }
         }
 
+        /// <summary>
+        /// Удаляет элемент по ключу
+        /// </summary>
+        /// <param name="key">Ключ</param>
+        /// <returns>Возвращает true, если элемент был найден и удалён и false, если элемент не был найден</returns>
         public bool Remove(TKey key)
         {
             if (key == null)
@@ -164,6 +220,10 @@ namespace DataStructuresLab.ModelHashSet
             return false;
         }
 
+        /// <summary>
+        /// Возвращает значение элемента по ключу
+        /// </summary>
+        /// <param name="key">Ключ</param>
         public TValue Get(TKey key)
         {
             if (key == null)
@@ -182,6 +242,9 @@ namespace DataStructuresLab.ModelHashSet
             throw new KeyNotFoundException("Ключ не найден.");
         }
 
+        /// <summary>
+        /// Выводит таблицу
+        /// </summary>
         public void PrintHS()
         {
             if (set == null)
