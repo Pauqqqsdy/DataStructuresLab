@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataStructuresLab.ModelHashSet.Entry&lt;TKey, TValue&gt;">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ModelHashSet\Entry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataStructuresLab.ModelHashSet.HashTable&lt;TKey, TValue&gt;">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAABBABAQQBAQAAAAIAAAcAAAAAAFQoAA=</HashCode>
+      <FileName>ModelHashSet\HashTable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DataStructuresLab.ModelHashSet.ItemTable&lt;T&gt;">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAEAAAAAAAAAAAAAJAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelHashSet\ItemTable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarLibrary.IdNumber">
+    <Position X="8" Y="3.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CarLibrary.OffroadCar">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CarLibrary.PassengerCar">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CarLibrary.SortByYearComparator">
+    <Position X="9.75" Y="6" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CarLibrary.Transport">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CarLibrary.Truck">
+    <Position X="4.5" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DataStructuresLab.Program">
+    <Position X="9.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAARAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataStructuresLab.TransportsHashTableActions">
+    <Position X="11.75" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAIAAAAAAAEAAAIAAAAAAAAEAAAAAEEAAQQ=</HashCode>
+      <FileName>HashTableActions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="CarLibrary.ICreateItems">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
