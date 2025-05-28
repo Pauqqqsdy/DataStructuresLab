@@ -1,4 +1,5 @@
 ﻿using CarLibrary;
+using DataStructuresLab.BinaryTree;
 using DataStructuresLab.Model;
 using DataStructuresLab.ModelHashSet;
 using System;
@@ -9,11 +10,54 @@ namespace DataStructuresLab
     {
         static void Main(string[] args)
         {
+            // Сравнение по умолчанию для int
+            Func<int, int, int> comparer = Comparer<int>.Default.Compare;
+
+            // Создание дерева
+            Tree<int> tree = new Tree<int>();
+
+            Console.WriteLine("Добавление элементов:");
+            tree.Insert(10, comparer);
+            tree.Insert(20, comparer);
+            tree.Insert(5, comparer);
+            tree.Add(15);
+            Console.WriteLine($"Количество элементов: {tree.Count}");
+
+            Console.WriteLine("\nПеречисление элементов:");
+            foreach (var item in tree)
+            {
+                Console.Write(item + " ");
+            }
+
+            Console.WriteLine("\nПроверка на содержание объекта в дереве:");
+            Console.WriteLine("Содержит ли число 10? " + tree.Contains(10));
+            Console.WriteLine("Содержит ли число 100? " + tree.Contains(100));
+
+            Console.WriteLine("\nКопирование в массив:");
+            int[] array = new int[tree.Count];
+            tree.CopyTo(array, 0);
+            Console.WriteLine("Элементы скопированы в массив:");
+            foreach (var item in array)
+            {
+                Console.Write(item + " ");
+            }
+
+            Console.WriteLine("\nУдаление:");
+            Console.WriteLine("Удалить 5: " + tree.Remove(5, comparer));
+            Console.WriteLine("Удалить 100: " + tree.Remove(100, comparer));
+            Console.WriteLine($"Количество после удаления: {tree.Count}");
+
+            Console.WriteLine("\nОчистка:");
+            tree.Clear();
+            Console.WriteLine($"После очистки количество: {tree.Count}");
+            Console.WriteLine("Содержит ли число 10? " + tree.Contains(10));
+
             while (true)
             {
                 Console.WriteLine("Выберите тип коллекции, с которым хотите работать:");
                 Console.WriteLine("1. Двусвязный список");
                 Console.WriteLine("2. Хеш-таблица");
+                Console.WriteLine("3. Дерево");
                 Console.WriteLine("0. Выход");
                 Console.Write("Вы выбрали: ");
 
@@ -33,6 +77,9 @@ namespace DataStructuresLab
                         break;
                     case 2:
                         WorkWithHashTable();
+                        break;
+                    case 3:
+                        WorkWithBinaryTree();
                         break;
                     case 0:
                         return;
@@ -159,6 +206,67 @@ namespace DataStructuresLab
                             actions.ClearHashTable();
                             break;
                         case 8:
+                            return;
+                        default:
+                            Console.WriteLine("Неверный выбор. Попробуйте снова.");
+                            break;
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка: {ex.Message}");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        static void WorkWithBinaryTree()
+        {
+            BinaryTreeActions actions = new BinaryTreeActions();
+
+            while (true)
+            {
+                Console.WriteLine("\nМеню работы с бинарным деревом:");
+                Console.WriteLine("1. Создать идеально сбалансированное дерево");
+                Console.WriteLine("2. Распечатать исходное дерево");
+                Console.WriteLine("3. Найти максимальный элемент по году выпуска");
+                Console.WriteLine("4. Преобразовать в дерево поиска (BST)");
+                Console.WriteLine("5. Удалить элемент по ID");
+                Console.WriteLine("6. Очистить дерево");
+                Console.WriteLine("7. Добавить новый элемент (Insert)");
+                Console.WriteLine("8. Вернуться к выбору коллекции");
+                Console.WriteLine("0. Выход");
+                Console.Write("Выберите действие: ");
+
+                int choice = int.Parse(Console.ReadLine()!);
+
+                try
+                {
+                    switch (choice)
+                    {
+                        case 1: 
+                            actions.CreateBalancedBinaryTree(); 
+                            break;
+                        case 2: 
+                            actions.PrintOriginalTree(); 
+                            break;
+                        case 3: 
+                            actions.FindMaxYear(); 
+                            break;
+                        case 4: 
+                            actions.ConvertToBST(); 
+                            break;
+                        case 5: 
+                            actions.RemoveNodeById(); 
+                            break;
+                        case 6: 
+                            actions.ClearTree(); 
+                            break;
+                        case 7: 
+                            actions.InsertNewTransport(); 
+                            break;
+                        case 8: 
                             return;
                         default:
                             Console.WriteLine("Неверный выбор. Попробуйте снова.");

@@ -276,135 +276,135 @@ namespace TestProject
         #endregion
 
         #region Юнит-тесты хеш-таблицы
-        [TestMethod]
-        public void TestDefaultConstructorHT()
-        {
-            // Act
-            var item = new ItemTable<int>();
-
-            // Assert
-            Assert.AreEqual(default(int), item.Data);
-            Assert.IsNull(item.Next);
-        }
-
-        [TestMethod]
-        public void TestConstructorWithDataHT()
-        {
-            // Arrange
-            string testData = "Тест";
-
-            // Act
-            var item = new ItemTable<string>(testData);
-
-            // Assert
-            Assert.AreEqual(testData, item.Data);
-            Assert.IsNull(item.Next);
-        }
-
-        [TestMethod]
-        public void TestToStringWithDataHT()
-        {
-            // Arrange
-            var item = new ItemTable<double>(2.27);
-
-            // Act
-            var result = item.ToString();
-
-            // Assert
-            Assert.AreEqual("2,27", result);
-        }
-
-        [TestMethod]
-        public void TestToStringWithNullData()
-        {
-            // Arrange
-            var item = new ItemTable<string>();
-
-            // Act
-            var result = item.ToString();
-
-            // Assert
-            Assert.AreEqual("null", result);
-        }
-
-        [TestMethod]
-        public void TestDataPropertySetter()
-        {
-            // Arrange
-            var item = new ItemTable<int>(10);
-            int newValue = 20;
-
-            // Act
-            item.Data = newValue;
-
-            // Assert
-            Assert.AreEqual(newValue, item.Data);
-        }
-
-        [TestMethod]
-        public void TestNextPropertySetter()
-        {
-            // Arrange
-            var firstItem = new ItemTable<string>("first");
-            var secondItem = new ItemTable<string>("second");
-
-            // Act
-            firstItem.Next = secondItem;
-
-            // Assert
-            Assert.AreSame(secondItem, firstItem.Next);
-        }
-
-        [TestMethod]
-        public void TestToStringWithCustomObject()
-        {
-            // Arrange
-            var transport = new Transport(5, "Лада", 2010, "Зелёный", 25000, 120);
-            var item = new ItemTable<Transport>(transport);
-
-            // Act
-            string result = item.ToString();
-
-            // Assert
-            Assert.AreEqual(transport.ToString(), result);
-        }
-
-        [TestMethod]
-        public void TestChainingItems()
-        {
-            // Arrange
-            var first = new ItemTable<int>(1);
-            var second = new ItemTable<int>(2);
-            var third = new ItemTable<int>(3);
-
-            // Act
-            first.Next = second;
-            second.Next = third;
-
-            // Assert
-            Assert.AreSame(second, first.Next);
-            Assert.AreSame(third, second.Next);
-            Assert.IsNull(third.Next);
-        }
-
-        [TestMethod]
-        public void EntryShouldSetKeyAndValue()
-        {
-            // Arrange
-            int expectedKey = 42;
-            string expectedValue = "Тест";
-
-            // Act
-            var entry = new Entry<int, string>(expectedKey, expectedValue);
-
-            // Assert
-            Assert.AreEqual(expectedKey, entry.Key);
-            Assert.AreEqual(expectedValue, entry.Value);
-        }
 
         [TestClass]
         public class HashTableTests
         {
+            [TestMethod]
+            public void TestDefaultConstructorHT()
+            {
+                // Act
+                var item = new ItemTable<int>();
+
+                // Assert
+                Assert.AreEqual(default(int), item.Data);
+                Assert.IsNull(item.Next);
+            }
+
+            [TestMethod]
+            public void TestConstructorWithDataHT()
+            {
+                // Arrange
+                string testData = "Тест";
+
+                // Act
+                var item = new ItemTable<string>(testData);
+
+                // Assert
+                Assert.AreEqual(testData, item.Data);
+                Assert.IsNull(item.Next);
+            }
+
+            [TestMethod]
+            public void TestToStringWithDataHT()
+            {
+                // Arrange
+                var item = new ItemTable<double>(2.27);
+
+                // Act
+                var result = item.ToString();
+
+                // Assert
+                Assert.AreEqual("2,27", result);
+            }
+
+            [TestMethod]
+            public void TestToStringWithNullData()
+            {
+                // Arrange
+                var item = new ItemTable<string>();
+
+                // Act
+                var result = item.ToString();
+
+                // Assert
+                Assert.AreEqual("null", result);
+            }
+
+            [TestMethod]
+            public void TestDataPropertySetter()
+            {
+                // Arrange
+                var item = new ItemTable<int>(10);
+                int newValue = 20;
+
+                // Act
+                item.Data = newValue;
+
+                // Assert
+                Assert.AreEqual(newValue, item.Data);
+            }
+
+            [TestMethod]
+            public void TestNextPropertySetter()
+            {
+                // Arrange
+                var firstItem = new ItemTable<string>("first");
+                var secondItem = new ItemTable<string>("second");
+
+                // Act
+                firstItem.Next = secondItem;
+
+                // Assert
+                Assert.AreSame(secondItem, firstItem.Next);
+            }
+
+            [TestMethod]
+            public void TestToStringWithCustomObject()
+            {
+                // Arrange
+                var transport = new Transport(5, "Лада", 2010, "Зелёный", 25000, 120);
+                var item = new ItemTable<Transport>(transport);
+
+                // Act
+                string result = item.ToString();
+
+                // Assert
+                Assert.AreEqual(transport.ToString(), result);
+            }
+
+            [TestMethod]
+            public void TestChainingItems()
+            {
+                // Arrange
+                var first = new ItemTable<int>(1);
+                var second = new ItemTable<int>(2);
+                var third = new ItemTable<int>(3);
+
+                // Act
+                first.Next = second;
+                second.Next = third;
+
+                // Assert
+                Assert.AreSame(second, first.Next);
+                Assert.AreSame(third, second.Next);
+                Assert.IsNull(third.Next);
+            }
+
+            [TestMethod]
+            public void EntryShouldSetKeyAndValue()
+            {
+                // Arrange
+                int expectedKey = 42;
+                string expectedValue = "Тест";
+
+                // Act
+                var entry = new Entry<int, string>(expectedKey, expectedValue);
+
+                // Assert
+                Assert.AreEqual(expectedKey, entry.Key);
+                Assert.AreEqual(expectedValue, entry.Value);
+            }
             [TestMethod]
             public void InitializeEmptyTable()
             {
@@ -547,5 +547,7 @@ namespace TestProject
             }
             #endregion
         }
+
+
     }
 }
