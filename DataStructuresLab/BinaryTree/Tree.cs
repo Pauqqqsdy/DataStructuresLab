@@ -43,8 +43,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="generator">Функция для генерации элементов случайным образом</param>
         public Tree(int length, Func<T> generator)
         {
-            if (generator == null)
-                throw new ArgumentNullException();
+            if (generator == null) throw new ArgumentNullException();
 
             var random = new Random();
             for (int i = 0; i < length; i++)
@@ -59,8 +58,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="other">Дерево, которое требуется скопировать</param>
         public Tree(Tree<T> other) : this()
         {
-            if (other == null)
-                throw new ArgumentNullException();
+            if (other == null) throw new ArgumentNullException();
 
             foreach (var item in other)
             {
@@ -604,10 +602,9 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="arrayIndex">Индекс массива</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null)  
-                throw new ArgumentNullException();
-            if (arrayIndex < 0 || arrayIndex + Count > array.Length)
-                throw new ArgumentOutOfRangeException();
+            if (array == null) throw new ArgumentNullException();
+
+            if (arrayIndex < 0 || arrayIndex + Count > array.Length) throw new ArgumentOutOfRangeException();
 
             foreach (var item in this)
             {
