@@ -291,7 +291,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node">Узел, который проверяем</param>
         /// <returns>Высота узла</returns>
-        private int Height(Node<T>? node)
+        private int GetHeight(Node<T>? node)
         {
             return node?.Height ?? 0;
         }
@@ -303,7 +303,7 @@ namespace DataStructuresLab.BinaryTree
         /// <returns>Разность между левым и правым поддеревьями</returns>
         private int GetBalance(Node<T>? node)
         {
-            return node == null ? 0 : Height(node.Left) - Height(node.Right);
+            return node == null ? 0 : GetHeight(node.Left) - GetHeight(node.Right);
         }
 
         /// <summary>
@@ -320,9 +320,9 @@ namespace DataStructuresLab.BinaryTree
             newRoot.Right = root;
             root.Left = rightSubtree;
 
-            root.Height = 1 + Math.Max(Height(root.Left), Height(root.Right));
+            root.Height = 1 + Math.Max(GetHeight(root.Left), GetHeight(root.Right));
 
-            newRoot.Height = 1 + Math.Max(Height(newRoot.Left), Height(newRoot.Right));
+            newRoot.Height = 1 + Math.Max(GetHeight(newRoot.Left), GetHeight(newRoot.Right));
 
             return newRoot;
         }
@@ -341,9 +341,9 @@ namespace DataStructuresLab.BinaryTree
             newRoot.Left = root;
             root.Right = leftSubtree;
 
-            root.Height = 1 + Math.Max(Height(root.Left), Height(root.Right));
+            root.Height = 1 + Math.Max(GetHeight(root.Left), GetHeight(root.Right));
 
-            newRoot.Height = 1 + Math.Max(Height(newRoot.Left), Height(newRoot.Right));
+            newRoot.Height = 1 + Math.Max(GetHeight(newRoot.Left), GetHeight(newRoot.Right));
 
             return newRoot;
         }
@@ -388,7 +388,7 @@ namespace DataStructuresLab.BinaryTree
             if (node == null)
                 return null;
 
-            node.Height = 1 + Math.Max(Height(node.Left), Height(node.Right));
+            node.Height = 1 + Math.Max(GetHeight(node.Left), GetHeight(node.Right));
 
             int balance = GetBalance(node);
 
@@ -504,7 +504,7 @@ namespace DataStructuresLab.BinaryTree
             else
                 return node;
 
-            node.Height = 1 + Math.Max(Height(node.Left), Height(node.Right));
+            node.Height = 1 + Math.Max(GetHeight(node.Left), GetHeight(node.Right));
 
             int balance = GetBalance(node);
 

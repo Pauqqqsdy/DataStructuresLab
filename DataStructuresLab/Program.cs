@@ -229,10 +229,10 @@ namespace DataStructuresLab
                 Console.WriteLine("1. Создать идеально сбалансированное дерево");
                 Console.WriteLine("2. Распечатать исходное дерево");
                 Console.WriteLine("3. Найти максимальный элемент по году выпуска");
-                Console.WriteLine("4. Преобразовать в дерево поиска (BST)");
+                Console.WriteLine("4. Преобразовать в дерево поиска");
                 Console.WriteLine("5. Удалить элемент по ID");
                 Console.WriteLine("6. Очистить дерево");
-                Console.WriteLine("7. Добавить новый элемент (Insert)");
+                Console.WriteLine("7. Добавить новый элемент");
                 Console.WriteLine("8. Вернуться к выбору коллекции");
                 Console.WriteLine("0. Выход");
                 Console.Write("Выберите действие: ");
