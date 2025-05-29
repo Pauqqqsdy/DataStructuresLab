@@ -1,8 +1,9 @@
 using DataStructuresLab;
-using DataStructuresLab.Model;
 using System;
 using CarLibrary;
 using DataStructuresLab.ModelHashSet;
+using DataStructuresLab.Model;
+using DataStructuresLab.BinaryTree;
 
 namespace TestProject
 {
@@ -548,6 +549,227 @@ namespace TestProject
             #endregion
         }
 
+        #region Юнит-тесты для деревьев
+        [TestClass]
+        public class TreeTests
+        {
+            [TestMethod]
+            public void CopyingShouldCopyAllElements()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
 
+                var array = new int[3];
+
+                // Act
+                tree.CopyTo(array, 0);
+
+                // Assert
+                CollectionAssert.AreEquivalent(new[] { 5, 10, 15 }, array);
+            }
+
+            [TestMethod]
+            public void ContainsShouldReturnTrueForExistingElement()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+
+                // Assert
+                Assert.IsTrue(tree.Contains(5));
+            }
+
+            [TestMethod]
+            public void ContainsShouldReturnFalseForNonExistingElement()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+
+                // Assert
+                Assert.IsFalse(tree.Contains(7));
+            }
+
+            [TestMethod]
+            public void RemoveShouldDecreaseCountAndRemoveElement()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
+
+                // Act
+                bool removed = tree.Remove(5, Comparer<int>.Default.Compare);
+
+                // Assert
+                Assert.IsTrue(removed);
+                Assert.AreEqual(2, tree.Count);
+                Assert.IsFalse(tree.Contains(5));
+            }
+
+            [TestMethod]
+            public void CountShouldBeCorrectAfterInsertions()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+
+                // Act
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
+
+                // Assert
+                Assert.AreEqual(3, tree.Count);
+            }
+
+            [TestMethod]
+            public void ClearShouldRemoveAllElements()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+
+                // Act
+                tree.Clear();
+
+                // Assert
+                Assert.AreEqual(0, tree.Count);
+                Assert.IsFalse(tree.Contains(10));
+                Assert.IsFalse(tree.Contains(5));
+            }
+
+            [TestMethod]
+            public void DeepCopyShouldHaveSameValuesButDifferentReference()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
+
+                // Act
+                var copiedTree = tree.DeepCopy();
+
+                // Assert
+                Assert.AreEqual(tree.Count, copiedTree.Count);
+                CollectionAssert.AreEquivalent(tree.ToArray(), copiedTree.ToArray());
+                Assert.AreNotSame(tree, copiedTree);
+            }
+
+            [TestMethod]
+            public void AddingItemsIncreasesCount()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+
+                // Act
+                tree.Add(10);
+                tree.Add(5);
+                tree.Add(15);
+
+                // Assert
+                Assert.AreEqual(3, tree.Count);
+            }
+
+            [TestMethod]
+            public void InOrderTraversalReturnsSortedElements()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Add(10);
+                tree.Add(5);
+                tree.Add(15);
+
+                // Act
+                var result = new List<int>(tree);
+
+                // Assert
+                CollectionAssert.AreEqual(new[] { 5, 10, 15 }, result);
+            }
+
+            [TestMethod]
+            public void CopyToCopiesAllElementsToArray()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Add(10);
+                tree.Add(5);
+                tree.Add(15);
+                var array = new int[3];
+
+                // Act
+                tree.CopyTo(array, 0);
+
+                // Assert
+                CollectionAssert.AreEquivalent(new[] { 5, 10, 15 }, array);
+            }
+
+            [TestMethod]
+            public void ContainsReturnsTrueForExistingElement()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Add(10);
+                tree.Add(5);
+
+                // Act & Assert
+                Assert.IsTrue(tree.Contains(5));
+            }
+
+            [TestMethod]
+            public void ContainsReturnsFalseForNonExistingElement()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Add(10);
+                tree.Add(5);
+
+                // Act & Assert
+                Assert.IsFalse(tree.Contains(7));
+            }
+
+            [TestMethod]
+            public void ClearRemovesAllElements()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Add(10);
+                tree.Add(5);
+
+                // Act
+                tree.Clear();
+
+                // Assert
+                Assert.AreEqual(0, tree.Count);
+                Assert.IsFalse(tree.Contains(10));
+            }
+
+            [TestMethod]
+            public void ConvertToBSTProducesSortedInOrderTraversal()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(20, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(30, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
+
+                // Act
+                var bst = tree.ConvertToBST(Comparer<int>.Default.Compare);
+
+                // Assert
+                var result = new List<int>(bst);
+                CollectionAssert.AreEqual(new[] { 5, 10, 15, 20, 30 }, result);
+            }
+        }
+        #endregion
     }
 }

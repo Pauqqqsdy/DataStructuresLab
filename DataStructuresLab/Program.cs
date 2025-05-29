@@ -10,10 +10,8 @@ namespace DataStructuresLab
     {
         static void Main(string[] args)
         {
-            // Сравнение по умолчанию для int
             Func<int, int, int> comparer = Comparer<int>.Default.Compare;
 
-            // Создание дерева
             Tree<int> tree = new Tree<int>();
 
             Console.WriteLine("Добавление элементов:");

@@ -5,19 +5,42 @@ using System.Text;
 
 namespace DataStructuresLab.BinaryTree
 {
-    class Tree<T> : IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
+    public class Tree<T> : IEnumerable<T>, IReadOnlyCollection<T> //, ICollection<T>
     {
+        /// <summary>
+        /// Корень дерева
+        /// </summary>
         public Node<T>? Root { get; set; }
+
+        /// <summary>
+        /// Количество элементов в дереве
+        /// </summary>
         public int Count { get; set; }
+
+        /// <summary>
+        /// Показывает доступность дерева к изменениям
+        /// </summary>
         public bool IsReadOnly => false;
+
+        /// <summary>
+        /// Реализация коллекции IReadOnlyCollection<T>, возвращает количество элементов
+        /// </summary>
         int IReadOnlyCollection<T>.Count => Count;
 
+        /// <summary>
+        /// Пустое дерево
+        /// </summary>
         public Tree()
         {
             Root = null;
             Count = 0;
         }
 
+        /// <summary>
+        /// Дерево с заданным размером, заполняемое случайными элементами
+        /// </summary>
+        /// <param name="length">Количество элементов для добавления</param>
+        /// <param name="generator">Функция для генерации элементов случайным образом</param>
         public Tree(int length, Func<T> generator)
         {
             if (generator == null)
@@ -30,6 +53,10 @@ namespace DataStructuresLab.BinaryTree
             }
         }
 
+        /// <summary>
+        /// Выполняет глубокую копию другого дерева
+        /// </summary>
+        /// <param name="other">Дерево, которое требуется скопировать</param>
         public Tree(Tree<T> other) : this()
         {
             if (other == null)
@@ -41,11 +68,17 @@ namespace DataStructuresLab.BinaryTree
             }
         }
 
+        /// <summary>
+        /// Создание идеально сбалансированного дерева
+        /// </summary>
+        /// <param name="size">Размер дерева</param>
+        /// <param name="getData">Функция для получения данных конкретного узла</param>
+        /// <returns></returns>
         public Node<T>? CreateIdealTree(int size, Func<T> getData)
         {
             if (size == 0) return null;
 
-            int leftSize = size / 2;
+            int leftSize = size / 2; // 
             int rightSize = size - leftSize - 1;
 
             T data = getData();
@@ -57,6 +90,10 @@ namespace DataStructuresLab.BinaryTree
             return node;
         }
 
+        /// <summary>
+        /// Метод, возвращающий строковое представление бинарного дерева по каждому уровню
+        /// </summary>
+        /// <returns>Строка с представлением дерева</returns>
         public string PrintByLevels()
         {
             if (Root == null) return "Дерево пусто";
@@ -88,6 +125,11 @@ namespace DataStructuresLab.BinaryTree
             return result.ToString();
         }
 
+        /// <summary>
+        /// Находит максимальный элемент в дереве
+        /// </summary>
+        /// <param name="comparer">Функция сравнения двух элементов</param>
+        /// <returns>Максимальный элемент</returns>
         public T FindMax(Func<T, T, int> comparer)
         {
             if (Root == null) throw new InvalidOperationException("Дерево пусто");
@@ -95,12 +137,17 @@ namespace DataStructuresLab.BinaryTree
             return TraverseTree(Root, comparer);
         }
 
+        /// <summary>
+        /// Рекурсивный обход дерева для сравнения его элементов
+        /// </summary>
+        /// <param name="node">Узел, который нужно сравнить</param>
+        /// <param name="comparer">Функция сравнения двух элементов</param>
+        /// <returns></returns>
         private T TraverseTree(Node<T>? node, Func<T, T, int> comparer)
         {
             if (node == null) return default!;
 
             T current = node.Data;
-
             T left = TraverseTree(node.Left, comparer);
             T right = TraverseTree(node.Right, comparer);
 
@@ -113,6 +160,13 @@ namespace DataStructuresLab.BinaryTree
             return current;
         }
 
+        /// <summary>
+        /// Метод для построения сбалансированного дерева поиска
+        /// </summary>
+        /// <param name="sortedElements">Отсортированный список элементов</param>
+        /// <param name="start">Начальный индекс</param>
+        /// <param name="end">Конечный индекс</param>
+        /// <returns></returns>
         private Node<T>? BuildBST(IList<T> sortedElements, int start, int end)
         {
             if (start > end) return null;
@@ -126,6 +180,11 @@ namespace DataStructuresLab.BinaryTree
             return node;
         }
 
+        /// <summary>
+        /// Рекурсивное добавление элементов в список 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="elements"></param>
         private void TraversalAdd(Node<T> node, List<T> elements)
         {
             if (node == null) return;
@@ -135,6 +194,11 @@ namespace DataStructuresLab.BinaryTree
             TraversalAdd(node.Right, elements);
         }
 
+        /// <summary>
+        /// Метод, позволяющий изменить существующее дерево в сбалансированное дерево поиска
+        /// </summary>
+        /// <param name="comparer">Функция сравнения двух элементов</param>
+        /// <returns>Сбалансированное дерево поиска</returns>
         public Tree<T> ConvertToBST(Func<T, T, int> comparer)
         {
             if (comparer == null) throw new ArgumentNullException();
@@ -151,6 +215,10 @@ namespace DataStructuresLab.BinaryTree
             return bstTree;
         }
 
+        /// <summary>
+        /// Глубокое копирование дерева
+        /// </summary>
+        /// <returns>Новое дерево с сохранёнными данными</returns>
         public Tree<T> DeepCopy()
         {
             var newTree = new Tree<T>();
@@ -159,6 +227,11 @@ namespace DataStructuresLab.BinaryTree
             return newTree;
         }
 
+        /// <summary>
+        /// Рекурсивное создание копии узла и его потомков
+        /// </summary>
+        /// <param name="node">Узел для копирования</param>
+        /// <returns>Новая копия узла</returns>
         private Node<T>? DeepCopyNode(Node<T>? node)
         {
             if (node == null) return null;
@@ -170,6 +243,11 @@ namespace DataStructuresLab.BinaryTree
             return newNode;
         }
 
+        /// <summary>
+        /// Вывод дерева поиска
+        /// </summary>
+        /// <param name="comparer">Функция сравнения элементов</param>
+        /// <returns>Представление дерева поиска по уровням</returns>
         public string PrintAsBST(Func<T, T, int> comparer)
         {
             if (comparer == null) throw new ArgumentNullException();
@@ -181,12 +259,22 @@ namespace DataStructuresLab.BinaryTree
             return bstTree.PrintByLevels();
         }
 
+        /// <summary>
+        /// Выводит представление дерева в виде бинарного дерева поиска
+        /// </summary>
+        /// <param name="comparer">Функция сравнения элементов</param>
         public void ShowBST(Func<T, T, int> comparer)
         {
             Console.WriteLine("Дерево поиска:");
             Console.WriteLine(PrintAsBST(comparer));
         }
 
+        /// <summary>
+        /// Удялет элемент из дерева
+        /// </summary>
+        /// <param name="key">Элемент для удаления</param>
+        /// <param name="comparer">Функция сравнения элементов</param>
+        /// <returns>В зависимости от того, удалён ли элемент, выводит true или false соответственно</returns>
         public bool Remove(T key, Func<T, T, int> comparer)
         {
             if (Root == null) return false;
@@ -200,16 +288,31 @@ namespace DataStructuresLab.BinaryTree
             return found;
         }
 
+        /// <summary>
+        /// Возвращает высоту узла в дереве
+        /// </summary>
+        /// <param name="node">Узел, который проверяем</param>
+        /// <returns>Высота узла</returns>
         private int Height(Node<T>? node)
         {
             return node?.Height ?? 0;
         }
 
+        /// <summary>
+        /// Вычисление баланс фактора
+        /// </summary>
+        /// <param name="node">Узел, который проверяем</param>
+        /// <returns>Разность между левым и правым поддеревьями</returns>
         private int GetBalance(Node<T>? node)
         {
             return node == null ? 0 : Height(node.Left) - Height(node.Right);
         }
 
+        /// <summary>
+        /// Правый поворот вокруг определённого узла
+        /// </summary>
+        /// <param name="root">Узел для поворота</param>
+        /// <returns>Новый корень поддерева</returns>
         private Node<T>? RotateRight(Node<T>? root)
         {
             Node<T> newRoot = root.Left;
@@ -226,6 +329,11 @@ namespace DataStructuresLab.BinaryTree
             return newRoot;
         }
 
+        /// <summary>
+        /// Левый поворот вокруг определённого узла
+        /// </summary>
+        /// <param name="root">Узел для поворота</param>
+        /// <returns>Новый корень поддерева</returns>
         private Node<T>? RotateLeft(Node<T>? root)
         {
             Node<T> newRoot = root.Right;
@@ -242,6 +350,14 @@ namespace DataStructuresLab.BinaryTree
             return newRoot;
         }
 
+        /// <summary>
+        /// Удаляет рекурсивно узел с заданным ключом и балансирует дерево
+        /// </summary>
+        /// <param name="node">Текущий узел</param>
+        /// <param name="key">Ключ</param>
+        /// <param name="comparer">Функция сравнения элементов</param>
+        /// <param name="found">Флаг поиска узла (false - не найден, true - найден)</param>
+        /// <returns>Новый корень поддерева после удаления и балансировки</returns>
         private Node<T>? RemoveNode(Node<T>? node, T key, Func<T, T, int> comparer, ref bool found)
         {
             int compareResult = comparer(key, node.Data);
@@ -299,6 +415,11 @@ namespace DataStructuresLab.BinaryTree
             return node;
         }
 
+        /// <summary>
+        /// Поиск минимального элемента в поддереве
+        /// </summary>
+        /// <param name="node">Корень поддерева</param>
+        /// <returns>Минимальный элемент</returns>
         private T FindMin(Node<T> node)
         {
             while (node.Left != null)
@@ -307,12 +428,20 @@ namespace DataStructuresLab.BinaryTree
             return node.Data;
         }
 
+        /// <summary>
+        /// Полностью очищает дерево
+        /// </summary>
         public void Clear()
         {
             Root = ClearNode(Root);
             Count = 0;
         }
 
+        /// <summary>
+        /// Очищает все узлы дерева с помощью рекурсии
+        /// </summary>
+        /// <param name="root">Корень поддерева</param>
+        /// <returns>Возвращает null</returns>
         private Node<T>? ClearNode(Node<T>? root)
         {
             while (root != null)
@@ -345,6 +474,11 @@ namespace DataStructuresLab.BinaryTree
             return null;
         }
 
+        /// <summary>
+        /// Добавляет элемент в дерево
+        /// </summary>
+        /// <param name="key">Элемент для добавления</param>
+        /// <param name="comparer">Функция сравнения элементов</param>
         public void Insert(T key, Func<T, T, int> comparer)
         {
             if (comparer == null) throw new ArgumentNullException();
@@ -353,6 +487,13 @@ namespace DataStructuresLab.BinaryTree
             Count++;
         }
 
+        /// <summary>
+        /// Вставляет рекурсивно новый узел и балансирует в AVL дерево
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="key"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         private Node<T> InsertNode(Node<T>? node, T key, Func<T, T, int> comparer)
         {
             if (node == null) return new Node<T>(key);
@@ -394,6 +535,13 @@ namespace DataStructuresLab.BinaryTree
             return node;
         }
 
+        /// <summary>
+        /// Поиск узла с заданным ключом
+        /// </summary>
+        /// <param name="node">Текущий узел</param>
+        /// <param name="key">Ключ поиска</param>
+        /// <param name="comparer">Функция сравнения элементов</param>
+        /// <returns>Найденный узел</returns>
         private Node<T>? Find(Node<T>? node, T key, Func<T, T, int> comparer)
         {
             if (node == null) return null;
@@ -412,6 +560,11 @@ namespace DataStructuresLab.BinaryTree
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        /// <summary>
+        /// Выполняет обход дерева слева-направо
+        /// </summary>
+        /// <param name="node">Текущий узел</param>
+        /// <returns>Последовательность элементов</returns>
         private IEnumerable<T> InOrder(Node<T>? node)
         {
             if (node == null) yield break;
@@ -425,16 +578,30 @@ namespace DataStructuresLab.BinaryTree
                 yield return right;
         }
 
+        /// <summary>
+        /// Добавление элемента в дерево
+        /// </summary>
+        /// <param name="item">Элемент, который нужно добавить</param>
         public void Add(T item)
         {
             Insert(item, Comparer<T>.Default.Compare);
         }
 
+        /// <summary>
+        /// Проверка на наличие элемента в дереве
+        /// </summary>
+        /// <param name="item">Элемент, который нужно найти</param>
+        /// <returns>Возвращает true, если элемент был найден, иначе - false</returns>
         public bool Contains(T item)
         {
             return Find(Root, item, Comparer<T>.Default.Compare) != null;
         }
 
+        /// <summary>
+        /// Копирует все элементы дерева в массив
+        /// </summary>
+        /// <param name="array">Массив, в который копируются элементы</param>
+        /// <param name="arrayIndex">Индекс массива</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)  
@@ -448,14 +615,15 @@ namespace DataStructuresLab.BinaryTree
             }
         }
 
-        bool ICollection<T>.Remove(T item)
-        {
-            return Remove(item, Comparer<T>.Default.Compare);
-        }
+        // Уже реализованы (?)
+        //  ICollection<T>.Remove(T item)
+        // {
+        //     return Remove(item, Comparer<T>.Default.Compare);
+        // }
 
-        bool ICollection<T>.Contains(T item)
-        {
-            return Find(Root, item, Comparer<T>.Default.Compare) != null;
-        }
+        // bool ICollection<T>.Contains(T item)
+        // {
+        //     return Find(Root, item, Comparer<T>.Default.Compare) != null;
+        // }
     }
 }
