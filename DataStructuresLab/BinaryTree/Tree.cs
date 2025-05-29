@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataStructuresLab.BinaryTree
 {
-    public class Tree<T> : IEnumerable<T>, IReadOnlyCollection<T> //, ICollection<T>
+    public class Tree<T> : IEnumerable<T> //, ICollection<T>
     {
         /// <summary>
         /// Корень дерева
@@ -21,11 +21,6 @@ namespace DataStructuresLab.BinaryTree
         /// Показывает доступность дерева к изменениям
         /// </summary>
         public bool IsReadOnly => false;
-
-        /// <summary>
-        /// Реализация коллекции IReadOnlyCollection<T>, возвращает количество элементов
-        /// </summary>
-        int IReadOnlyCollection<T>.Count => Count;
 
         /// <summary>
         /// Пустое дерево
