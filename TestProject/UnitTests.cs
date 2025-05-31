@@ -584,6 +584,33 @@ namespace TestProject
             }
 
             [TestMethod]
+            public void DefaultNodeConstructor()
+            {
+                // Arrange
+                var node = new Node<int>();
+
+                // Assert
+                Assert.AreEqual(default(int), node.Data);
+                Assert.IsNull(node.Left);
+                Assert.IsNull(node.Right);
+                Assert.AreEqual(1, node.Height);
+            }
+
+            [TestMethod]
+            public void ConstructorWithLengthShouldCreateTreeWithSpecifiedSize()
+            {
+                // Arrange
+                int expectedCount = 5;
+                Func<int> generator = () => new Random().Next(1, 100);
+
+                // Act
+                var tree = new Tree<int>(expectedCount, generator);
+
+                // Assert
+                Assert.AreEqual(expectedCount, tree.Count);
+            }
+
+            [TestMethod]
             public void ContainsShouldReturnFalseForNonExistingElement()
             {
                 // Arrange
@@ -768,6 +795,101 @@ namespace TestProject
                 // Assert
                 var result = new List<int>(bst);
                 CollectionAssert.AreEqual(new[] { 5, 10, 15, 20, 30 }, result);
+            }
+
+            [TestMethod]
+            public void CopyConstructorShouldCreateDeepCopyOfTree()
+            {
+                // Arrange
+                var originalTree = new Tree<int>();
+                originalTree.Insert(10, Comparer<int>.Default.Compare);
+                originalTree.Insert(5, Comparer<int>.Default.Compare);
+                originalTree.Insert(15, Comparer<int>.Default.Compare);
+
+                // Act
+                var copiedTree = new Tree<int>(originalTree);
+
+                // Assert
+                Assert.AreEqual(originalTree.Count, copiedTree.Count);
+                Assert.IsTrue(copiedTree.Contains(10));
+                Assert.IsTrue(copiedTree.Contains(5));
+                Assert.IsTrue(copiedTree.Contains(15));
+                Assert.AreNotSame(originalTree.Root, copiedTree.Root);
+            }
+
+            [TestMethod]
+            public void RotateRightShouldBalanceTreeCorrectly()
+            {
+                // Arrange:
+                var node = new Node<int>(30)
+                {
+                    Left = new Node<int>(20)
+                    {
+                        Left = new Node<int>(10)
+                    },
+                    Right = null,
+                    Height = 3
+                };
+
+                // Act
+                var tree = new Tree<int>();
+                Node<int> rotated = tree.RotateRight(node);
+
+                // Assert
+                Assert.AreEqual(20, rotated.Data);
+                Assert.AreEqual(10, rotated.Left.Data);
+                Assert.AreEqual(30, rotated.Right.Data);
+            }
+
+            private string ConsoleOutput(Action action)
+            {
+                var originalOutput = Console.Out;
+                using (var writer = new StringWriter())
+                {
+                    Console.SetOut(writer);
+                    action();
+                    Console.SetOut(originalOutput);
+                    return writer.ToString();
+                }
+            }
+
+            [TestMethod]
+            public void ShowBSTShouldConvertAndPrintBalancedBST()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
+                tree.Insert(3, Comparer<int>.Default.Compare);
+                tree.Insert(7, Comparer<int>.Default.Compare);
+
+                // Act
+                var output = ConsoleOutput(() => tree.ShowBST(Comparer<int>.Default.Compare));
+
+                // Assert
+                StringAssert.Contains(output, "Уровень");
+            }
+
+            [TestMethod]
+            public void PrintAsBSTShouldReturnBalancedBSTByLevels()
+            {
+                // Arrange
+                var tree = new Tree<int>();
+                tree.Insert(10, Comparer<int>.Default.Compare);
+                tree.Insert(5, Comparer<int>.Default.Compare);
+                tree.Insert(15, Comparer<int>.Default.Compare);
+                tree.Insert(3, Comparer<int>.Default.Compare);
+                tree.Insert(7, Comparer<int>.Default.Compare);
+
+                // Act
+                string result = tree.PrintAsBST(Comparer<int>.Default.Compare);
+
+                // Assert
+                StringAssert.Contains(result, "Уровень 1:");
+                StringAssert.Contains(result, "10");
+                StringAssert.Contains(result, "5");
+                StringAssert.Contains(result, "15");
             }
         }
         #endregion

@@ -25,33 +25,33 @@
     <Position X="8.75" Y="2.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DataStructuresLab.Model.DuplexLinkedList&lt;T&gt;">
-    <Position X="12.5" Y="0.5" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>ABJAAAAAAAAAAJAAARAABAQAAAAAAAAAAAACAABUIQA=</HashCode>
-      <FileName>ModelLinkedList\DuplexLinkedList.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="DataStructuresLab.Model.Item&lt;T&gt;">
-    <Position X="10.75" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAgAEAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
-      <FileName>ModelLinkedList\Item.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DataStructuresLab.Program">
     <Position X="8.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAARAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAAARAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DataStructuresLab.TransportsListActions">
-    <Position X="15.5" Y="0.5" Width="1.75" />
+  <Class Name="DataStructuresLab.BinaryTree.Node&lt;T&gt;">
+    <Position X="10.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAEAAAAAAAAAAAAAAAAAAAEQCAAAAAQBAAgAAAAAAA=</HashCode>
-      <FileName>TransportListActions.cs</FileName>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAABAACACAAAAAAAA=</HashCode>
+      <FileName>BinaryTree\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataStructuresLab.BinaryTree.Tree&lt;T&gt;">
+    <Position X="12.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEACAAkBADEQEAAABI1AAAAIAAIEAkAFIRBQIAA=</HashCode>
+      <FileName>BinaryTree\Tree.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DataStructuresLab.BinaryTreeActions">
+    <Position X="15" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAACAAAAAAAAAAEAAAAAAAgAEAkAAAAAAA=</HashCode>
+      <FileName>BinaryTreeActions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="CarLibrary.ICreateItems">

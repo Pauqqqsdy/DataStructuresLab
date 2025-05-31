@@ -71,7 +71,7 @@ namespace DataStructuresLab.BinaryTree
         {
             if (size == 0) return null;
 
-            int leftSize = size / 2; // 
+            int leftSize = size / 2; 
             int rightSize = size - leftSize - 1;
 
             T data = getData();
@@ -136,7 +136,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="node">Узел, который нужно сравнить</param>
         /// <param name="comparer">Функция сравнения двух элементов</param>
         /// <returns></returns>
-        private T TraverseTree(Node<T>? node, Func<T, T, int> comparer)
+        public T TraverseTree(Node<T>? node, Func<T, T, int> comparer)
         {
             if (node == null) return default!;
 
@@ -160,7 +160,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="start">Начальный индекс</param>
         /// <param name="end">Конечный индекс</param>
         /// <returns></returns>
-        private Node<T>? BuildBST(IList<T> sortedElements, int start, int end)
+        public Node<T>? BuildBST(IList<T> sortedElements, int start, int end)
         {
             if (start > end) return null;
 
@@ -178,7 +178,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node"></param>
         /// <param name="elements"></param>
-        private void TraversalAdd(Node<T> node, List<T> elements)
+        public void TraversalAdd(Node<T> node, List<T> elements)
         {
             if (node == null) return;
 
@@ -225,7 +225,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node">Узел для копирования</param>
         /// <returns>Новая копия узла</returns>
-        private Node<T>? DeepCopyNode(Node<T>? node)
+        public Node<T>? DeepCopyNode(Node<T>? node)
         {
             if (node == null) return null;
 
@@ -286,7 +286,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node">Узел, который проверяем</param>
         /// <returns>Высота узла</returns>
-        private int GetHeight(Node<T>? node)
+        public int GetHeight(Node<T>? node)
         {
             return node?.Height ?? 0;
         }
@@ -296,7 +296,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node">Узел, который проверяем</param>
         /// <returns>Разность между левым и правым поддеревьями</returns>
-        private int GetBalance(Node<T>? node)
+        public int GetBalance(Node<T>? node)
         {
             return node == null ? 0 : GetHeight(node.Left) - GetHeight(node.Right);
         }
@@ -306,7 +306,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="root">Узел для поворота</param>
         /// <returns>Новый корень поддерева</returns>
-        private Node<T>? RotateRight(Node<T>? root)
+        public Node<T>? RotateRight(Node<T>? root)
         {
             Node<T> newRoot = root.Left;
 
@@ -327,7 +327,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="root">Узел для поворота</param>
         /// <returns>Новый корень поддерева</returns>
-        private Node<T>? RotateLeft(Node<T>? root)
+        public Node<T>? RotateLeft(Node<T>? root)
         {
             Node<T> newRoot = root.Right;
 
@@ -351,7 +351,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="comparer">Функция сравнения элементов</param>
         /// <param name="found">Флаг поиска узла (false - не найден, true - найден)</param>
         /// <returns>Новый корень поддерева после удаления и балансировки</returns>
-        private Node<T>? RemoveNode(Node<T>? node, T key, Func<T, T, int> comparer, ref bool found)
+        public Node<T>? RemoveNode(Node<T>? node, T key, Func<T, T, int> comparer, ref bool found)
         {
             int compareResult = comparer(key, node.Data);
 
@@ -413,7 +413,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node">Корень поддерева</param>
         /// <returns>Минимальный элемент</returns>
-        private T FindMin(Node<T> node)
+        public T FindMin(Node<T> node)
         {
             while (node.Left != null)
                 node = node.Left;
@@ -435,7 +435,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="root">Корень поддерева</param>
         /// <returns>Возвращает null</returns>
-        private Node<T>? ClearNode(Node<T>? root)
+        public Node<T>? ClearNode(Node<T>? root)
         {
             while (root != null)
             {
@@ -487,7 +487,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="key"></param>
         /// <param name="comparer"></param>
         /// <returns></returns>
-        private Node<T> InsertNode(Node<T>? node, T key, Func<T, T, int> comparer)
+        public Node<T> InsertNode(Node<T>? node, T key, Func<T, T, int> comparer)
         {
             if (node == null) return new Node<T>(key);
 
@@ -535,7 +535,7 @@ namespace DataStructuresLab.BinaryTree
         /// <param name="key">Ключ поиска</param>
         /// <param name="comparer">Функция сравнения элементов</param>
         /// <returns>Найденный узел</returns>
-        private Node<T>? Find(Node<T>? node, T key, Func<T, T, int> comparer)
+        public Node<T>? Find(Node<T>? node, T key, Func<T, T, int> comparer)
         {
             if (node == null) return null;
 
@@ -558,7 +558,7 @@ namespace DataStructuresLab.BinaryTree
         /// </summary>
         /// <param name="node">Текущий узел</param>
         /// <returns>Последовательность элементов</returns>
-        private IEnumerable<T> InOrder(Node<T>? node)
+        public IEnumerable<T> InOrder(Node<T>? node)
         {
             if (node == null) yield break;
 
@@ -607,8 +607,8 @@ namespace DataStructuresLab.BinaryTree
             }
         }
 
-        // Уже реализованы (?)
-        //  ICollection<T>.Remove(T item)
+        // Уже реализованы
+        // ICollection<T>.Remove(T item)
         // {
         //     return Remove(item, Comparer<T>.Default.Compare);
         // }
