@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DataStructuresLab.Model;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DataStructuresLab.BinaryTree
 {
-    public class Tree<T> : IEnumerable<T> //, ICollection<T>
+    public class Tree<T> : IEnumerable<T>, ICollection<T>
     {
         /// <summary>
         /// Корень дерева
@@ -16,6 +17,11 @@ namespace DataStructuresLab.BinaryTree
         /// Количество элементов в дереве
         /// </summary>
         public int Count { get; set; }
+
+        /// <summary>
+        /// Количество элементов в дереве (только для чтения)
+        /// </summary>
+        public int Length => Count;
 
         /// <summary>
         /// Показывает доступность дерева к изменениям
@@ -607,15 +613,14 @@ namespace DataStructuresLab.BinaryTree
             }
         }
 
-        // Уже реализованы
-        // ICollection<T>.Remove(T item)
-        // {
-        //     return Remove(item, Comparer<T>.Default.Compare);
-        // }
+         bool ICollection<T>.Contains(T item)
+        {
+            return Find(Root, item, Comparer<T>.Default.Compare) != null;
+        }
 
-        // bool ICollection<T>.Contains(T item)
-        // {
-        //     return Find(Root, item, Comparer<T>.Default.Compare) != null;
-        // }
+        public bool Remove(T item)
+        {
+            return Remove(item, Comparer<T>.Default.Compare);
+        }
     }
 }
