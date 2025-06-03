@@ -359,6 +359,10 @@ namespace DataStructuresLab.BinaryTree
         /// <returns>Новый корень поддерева после удаления и балансировки</returns>
         public Node<T>? RemoveNode(Node<T>? node, T key, Func<T, T, int> comparer, ref bool found)
         {
+            if (node == null) return null;
+
+            if (node.Data == null) throw new InvalidOperationException();
+                
             int compareResult = comparer(key, node.Data);
 
             if (compareResult < 0)
